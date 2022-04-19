@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+    nginx:
+        hostname: insider-test.st
+        networks:
+            default:
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        ports:
+            - "8081:80"
+        links:
+            - app
+        volumes:
+            - ./:/var/www
+    app:
+        networks:
+            default:
+        build:
+            context: .
+            dockerfile: ./docker/php-fpm/Dockerfile
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAG: dev
+        volumes:
+            - ./:/var/www
+        links:
+            - postgres
+            - postgres-test
+            - redis
+    postgres:
+        networks:
+            default:
+        image: postgres:13.3
+        restart: always
+        volumes:
+            - ./docker/postgresql:/var/lib/postgresql
+        environment:
+            - POSTGRES_DB=main
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+        ports:
+            - "5432:5432"
+    postgres-test:
+        networks:
+            default:
+        image: postgres:13.3
+        restart: always
+        volumes:
+            - ./docker/postgresql-test:/var/lib/postgresql
+        environment:
+            - POSTGRES_DB=test
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+        ports:
+            - "5433:5432"
+    redis:
+        networks:
+            default:
+        build:
+            context: .
+            dockerfile: docker/redis/Dockerfile
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./docker/redis/data:/data
+networks:
+    default:
