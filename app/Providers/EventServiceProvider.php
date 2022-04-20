@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Domain\Events\WeekPlayed;
 use App\Domain\Listeners\ClearPredictionsCache;
-use App\Domain\Listeners\RecalculateResults;
+use App\Domain\Listeners\ClearResultsCache;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -17,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         WeekPlayed::class => [
             ClearPredictionsCache::class,
-            RecalculateResults::class,
+            ClearResultsCache::class,
         ],
     ];
 

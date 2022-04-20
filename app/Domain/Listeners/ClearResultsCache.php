@@ -9,7 +9,7 @@ use App\Domain\Events\WeekPlayed;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 
-class RecalculateResults
+class ClearResultsCache
 {
     private WeekPlayed $event;
 
