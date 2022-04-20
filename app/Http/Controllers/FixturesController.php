@@ -26,8 +26,8 @@ class FixturesController extends Controller
     {
         try {
             $fixtures = $generateFixturesUseCase->execute()->fixtures;
-        } catch (AlreadyGeneratedFixturesException $e) {
-            throw new ConflictHttpException($e->getMessage());
+        } catch (AlreadyGeneratedFixturesException) {
+            throw new ConflictHttpException('Fixtures already generated');
         }
 
         return FixturesCollection::make($fixtures);
@@ -42,8 +42,8 @@ class FixturesController extends Controller
     {
         try {
             $output = $playNextWeekUseCase->execute();
-        } catch (WeeksAlreadyPlayedException $e) {
-            throw new ConflictHttpException($e->getMessage());
+        } catch (WeeksAlreadyPlayedException) {
+            throw new ConflictHttpException('Weeks already played');
         }
 
         return FixturesCollection::make($output->fixtures);

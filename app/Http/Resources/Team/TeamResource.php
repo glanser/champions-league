@@ -24,6 +24,7 @@ class TeamResource extends JsonResource
             'draw'            => $this->draw,
             'lost'            => $this->lost,
             'goal_difference' => $this->goal_difference,
+            'points'          => $this->getInitialPoints(),
         ];
     }
 }

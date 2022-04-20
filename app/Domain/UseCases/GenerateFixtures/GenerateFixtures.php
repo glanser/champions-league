@@ -80,7 +80,7 @@ class GenerateFixtures implements GenerateFixturesInterface
 
             for ($j = 0; $j < $pairsPerSection - 1; $j++) {
                 $pairsFiltered = $teamPairs->filter(
-                    static fn(array $pair) => !($usedTeams->contains($pair[0]) && $usedTeams->contains($pair[1]))
+                    static fn(array $pair) => !($usedTeams->contains($pair[0]) || $usedTeams->contains($pair[1]))
                 );
 
                 if ($pairsFiltered->isEmpty()) {
